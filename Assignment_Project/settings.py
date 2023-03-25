@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
+
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +28,9 @@ SECRET_KEY = 'django-insecure-d$6nhet&=s2buv@^4*2un^8v2n730%k%vcd0nh6@d4^(g&kq#8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['namo-homework.azurewebsites.net']
 
+CSRF_TRUSTED_ORIGINS = ['https://namo-homework.azurewebsites.net']
 
 # Application definition
 
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'Homeworks',
 ]
 
@@ -48,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'Assignment_Project.urls'
@@ -79,10 +85,10 @@ DATABASES = {
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'assignment_project',   # ชื่อ database ของเรา
-        'USER': 'root',  # ชื่อผู้ใช้ ที่เราจะใช้ในการเข้าไปใช้งาน 
-        'PASSWORD': 'Namotasa13',  # รหัสผ่านของเรา 
-        'HOST': '127.0.0.1',  # URL ของ database ที่เราสร้างไว้ 
-        'PORT': '3306',  # พอร์ตหรือช่องทาง ของ database ที่เราสร้างไว้ 
+        'USER': os.environ.get('DB_USER', 'root'),  # ชื่อผู้ใช้ ที่เราจะใช้ในการเข้าไปใช้งาน 
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'Namotasa13'),  # รหัสผ่านของเรา 
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),  # URL ของ database ที่เราสร้างไว้ 
+        'PORT': os.environ.get('DB_PORT', '3306'),  # พอร์ตหรือช่องทาง ของ database ที่เราสร้างไว้ 
     }  
 }
 
