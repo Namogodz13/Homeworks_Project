@@ -49,7 +49,7 @@ def add_homework(request):
     homework_description = request.POST['description']
     score = request.POST['score']
     subject = Subject.objects.get(subject_id=request.POST['subject_id'])
-    teacher = Teacher.objects.get(teacher_id=request.POST['teacher_id'])
+    teacher = Teacher.objects.get(teacher_id=request.session['user'])
     room = Room.objects.get(room_id=request.POST['room_id'])
     deadline = request.POST['dead_line']
 
